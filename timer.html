@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <title>OBS Solid Border Timer</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0); 
+            font-family: sans-serif;
+        }
+
+        /* Pamja e numrave */
+        #timer-display {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 60px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+
+        /* Korniza e plotë (Solid Border) */
+        #border-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 15px solid transparent; /* Trashësia e vizës: 15px */
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Animacioni i pulsimit për vizën */
+        .flashing-border {
+            animation: pulse-border 1s step-end 20; /* '20' do të thotë përsërite 20 herë */
+        }
+
+        @keyframes pulse-border {
+            0% { border-color: red; }
+            50% { border-color: transparent; }
+            100% { border-color: red; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="timer-display">00:00</div>
+    <div id="border-overlay"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        let minutesInput = urlParams.get('min') || 5; 
+        
+        let timeLeft = parseInt(minutesInput) * 60;
+        let isFlashing = false;
+        
+        const display = document.getElementById('timer-display');
+        const border = document.getElementById('border-overlay');
+
+        function updateTimer() {
+            if (timeLeft <= 0) {
+                if (!isFlashing) {
+                    border.classList.add('flashing-border');
+                    display.style.color = "red";
+                    isFlashing = true;
+                }
+                timeLeft = 0;
+            } else {
+                timeLeft--;
+            }
+
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            display.innerText = (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
