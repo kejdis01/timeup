@@ -14,17 +14,18 @@
             font-family: sans-serif;
         }
 
-        /* Pamja e numrave */
-        #timer-display {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            font-size: 60px;
-            color: white;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            z-index: 10;
-        }
+/* Pamja e numrave */
+#timer-display {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 60px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    z-index: 10;
+    opacity: 0; /* Kjo e bën timer-in të padukshëm */
+}
 
         /* Korniza e plotë (Solid Border) */
         #border-overlay {
@@ -87,4 +88,5 @@
         setInterval(updateTimer, 1000);
     </script>
 </body>
+
 </html>
